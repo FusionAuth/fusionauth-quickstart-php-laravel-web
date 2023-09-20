@@ -3,6 +3,7 @@ Using compose file from - https://raw.githubusercontent.com/bitnami/containers/m
 
 ```bash
 mkdir mysite
+docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)  # ensure no previous containers with this name exist
 docker compose -f dockerComposeLaravel.yml up
 ```
 
@@ -11,6 +12,7 @@ Can browse to site on http://localhost:3000/
 
 Can now execute commands with
 ```bash
-docker-compose exec myapp php artisan list
+docker compose -f dockerComposeLaravel.yml exec app      echo hi
+docker compose -f dockerComposeLaravel.yml exec app      php --version
 ```
 
