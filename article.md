@@ -13,6 +13,7 @@ docker compose -f dockerComposeFusionAuth.yml up;
 mkdir mysite
 docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)  # ensure no previous containers with this name exist
 docker compose -f dockerComposeLaravel.yml up
+docker compose -f dockerComposeFusionAuth.yml up;
 ```
 
 `mysite` folder now matches the container
@@ -36,3 +37,15 @@ public/changebank.css
 public/money.jpg
 
 include @csrf in account form to avoid 419 page expired error
+
+```docker-compose
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+```
+and http://host.docker.internal
+
+```bash
+docker compose -f dockerComposeLaravel.yml exec app      composer require socialiteproviders/fusionauth
+```
+
+todo - put vendor files in source control for complete-application.
