@@ -12,7 +12,7 @@
       <div id="logo-header">
         <img src="https://fusionauth.io/assets/img/samplethemes/changebank/changebank.svg" />
         <div class="h-row">
-          <p class="header-email"><%= email %></p>
+          <p class="header-email">{{$email}}</p>
           <a class="button-lg" href="/logout"> Logout </a>
         </div>
       </div>

@@ -26,9 +26,9 @@ Route::get('/', function () {
 // });
 
 Route::get('/account', function () {
-    return view('account');
+    return view('account', ['email' => 'temp@example.com']);
 });
 
 Route::get('/change', function () {
-    return view('change');
+    return view('change', ['email' => 'temp@example.com']);
 });

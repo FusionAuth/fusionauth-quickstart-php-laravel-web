@@ -31,5 +31,6 @@ https://laravel.com/docs/10.x/socialite
 
 make
 resources/views/index.blade.php
+and account and change
 public/changebank.css
 public/money.jpg
