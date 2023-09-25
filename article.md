@@ -8,6 +8,7 @@ Using compose file from - https://raw.githubusercontent.com/bitnami/containers/m
 #to run
 cd ~/code/fusionauth-quickstart-php-laravel-web;
 docker stop $(docker ps -a -q);
+# docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)
 docker compose -f dockerComposeLaravel.yml up;
 docker compose -f dockerComposeFusionAuth.yml up;
 ```
