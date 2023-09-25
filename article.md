@@ -34,3 +34,5 @@ resources/views/index.blade.php
 and account and change
 public/changebank.css
 public/money.jpg
+
+include @csrf in account form to avoid 419 page expired error
