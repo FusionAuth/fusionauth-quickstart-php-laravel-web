@@ -2,9 +2,44 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('index');
+});
+
+// Route::get('/auth/redirect', function () {
+Route::get('/login', function () {
+    return Socialite::driver('fusionauth')->redirect();
+})->name('login');
+
+Route::get('/auth/callback', function () {
+    /** @var \SocialiteProviders\Manager\OAuth2\User $user */
+    $user = Socialite::driver('fusionauth')->user();
+
+    // Let's create a new entry in our users table (or update if it already exists) with some information from the user
+    // $user = User::updateOrCreate([
+    //     'fusionauth_id' => $user->id,
+    // ], [
+    //     'name' => $user->name,
+    //     'email' => $user->email,
+    //     'fusionauth_access_token' => $user->token,
+    //     'fusionauth_refresh_token' => $user->refreshToken,
+    // ]);
+
+    $localUser = new User();
+    $localUser->name = $user->name;
+    $localUser->email = $user->email;
+    // $localUser->password = 'plain_text_password'; // You can set the password without hashing
+    $localUser->fusionauth_id = $user->id;
+    $localUser->fusionauth_access_token = $user->token;
+    $localUser->fusionauth_refresh_token = $user->refreshToken;
+
+    // Logging the user in
+    Auth::login($user);
+    return redirect('/account');
 });
 
 // Route::get('/login', function () {
@@ -16,7 +51,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/account', function () {
-    return view('account', ['email' => 'temp@example.com']);
+    return view('account', ['email' => Auth::user()->email]);
 });
 
 Route::get('/change', function () {

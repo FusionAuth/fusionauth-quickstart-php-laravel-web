@@ -1,3 +1,6 @@
+todo - put vendor files in source control for complete-application.
+todo - alter .gitignore for mysite
+
 Installing laravel and php with docker - https://hub.docker.com/r/bitnami/laravel
 Using compose file from - https://raw.githubusercontent.com/bitnami/containers/main/bitnami/laravel/docker-compose.yml
 
@@ -44,8 +47,12 @@ include @csrf in account form to avoid 419 page expired error
 ```
 and http://host.docker.internal
 
+https://github.com/SocialiteProviders/FusionAuth
 ```bash
 docker compose -f dockerComposeLaravel.yml exec app      composer require socialiteproviders/fusionauth
 ```
 
-todo - put vendor files in source control for complete-application.
+alter EventServiceProvider.php. $listen function.
+config/services.php
+
+app/Models/User.php
