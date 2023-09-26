@@ -1,6 +1,6 @@
 # https://raw.githubusercontent.com/bitnami/containers/main/bitnami/laravel/docker-compose.yml
 
-version: 1
+version: '1'
 
 services:
   lara_db:
