@@ -7,17 +7,25 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    error_log('home 1');
     return view('index');
 });
 
 // Route::get('/auth/redirect', function () {
 Route::get('/login', function () {
-    return Socialite::driver('fusionauth')->redirect();
+        #return Socialite::driver('fusionauth')->redirect();
+    $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
+    $url = str_replace('http://host.docker.internal', 'http://localhost', $url);
+    return redirect($url);
 })->name('login');
 
 Route::get('/auth/callback', function () {
+    error_log( 'callback 1');
+
     /** @var \SocialiteProviders\Manager\OAuth2\User $user */
     $user = Socialite::driver('fusionauth')->user();
+
+    error_log( 'callback 2');
 
     // Let's create a new entry in our users table (or update if it already exists) with some information from the user
     // $user = User::updateOrCreate([
