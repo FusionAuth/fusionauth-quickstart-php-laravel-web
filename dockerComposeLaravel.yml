@@ -1,29 +1,29 @@
 # https://raw.githubusercontent.com/bitnami/containers/main/bitnami/laravel/docker-compose.yml
 
-version: '1'
+version: 1
 
 services:
-  db:
-    container_name: db
+  lara_db:
     image: docker.io/bitnami/mariadb:11.0
+    container_name: lara_db
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_USER=bn_myapp
       - MARIADB_DATABASE=bitnami_myapp
-  app:
-    container_name: app
+  lara_app:
     image: docker.io/bitnami/laravel:10
+    container_name: lara_app
     ports:
-      - '3000:8000'
+      - 3000:8000
     environment:
       - DB_HOST=mariadb
       - DB_PORT=3306
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp
     volumes:
-      - './mysite:/app'
+      - ./mysite:/app
     depends_on:
-      - db
+      - lara_db
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - host.docker.internal:host-gateway

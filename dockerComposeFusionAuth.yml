@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: postgres:12.9
+    container_name: fa_db
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER: ${POSTGRES_USER}
@@ -20,6 +21,7 @@ services:
 
   search:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: fa_search
     environment:
       cluster.name: fusionauth
       bootstrap.memory_lock: "true"
@@ -42,6 +44,7 @@ services:
 
   fusionauth:
     image: fusionauth/fusionauth-app:latest
+    container_name: fa
     depends_on:
       db:
         condition: service_healthy
