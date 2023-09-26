@@ -5,6 +5,8 @@ use Illuminate\Support\ServiceProvider;
 
 return [
 
+    // 'proxies' => '*',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

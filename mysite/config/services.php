@@ -36,7 +36,7 @@ return [
         'client_secret' => env('FUSIONAUTH_CLIENT_SECRET'),
         'base_url' => env('FUSIONAUTH_BASE_URL'),
         'redirect' => env('FUSIONAUTH_REDIRECT_URL'),
-        'tenant_id' => env('FUSIONAUTH_TENANT_ID'),
+        // 'tenant_id' => env('FUSIONAUTH_TENANT_ID'),
     ],
 
 ];

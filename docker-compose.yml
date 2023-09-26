@@ -1,0 +1,118 @@
+version: '3'
+
+networks:
+  db_net:
+    driver: bridge
+  search_net:
+    driver: bridge
+  lara_net:
+    driver: bridge
+
+volumes:
+  db_data:
+  fusionauth_config:
+  search_data:
+
+services:
+
+## FUSIONAUTH ####################
+  db:
+    image: postgres:12.9
+    container_name: fa_db
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - db_net
+    restart: unless-stopped
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  search:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: fa_search
+    environment:
+      cluster.name: fusionauth
+      bootstrap.memory_lock: "true"
+      discovery.type: single-node
+      ES_JAVA_OPTS: ${ES_JAVA_OPTS}
+    healthcheck:
+      test: [ "CMD", "curl",  "--fail" ,"--write-out", "'HTTP %{http_code}'", "--silent", "--output", "/dev/null", "http://localhost:9200/" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - search_net
+    restart: unless-stopped
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - search_data:/usr/share/elasticsearch/data
+
+  fusionauth:
+    image: fusionauth/fusionauth-app:latest
+    container_name: fa
+    depends_on:
+      db:
+        condition: service_healthy
+      search:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://db:5432/fusionauth
+      DATABASE_ROOT_USERNAME: ${POSTGRES_USER}
+      DATABASE_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      FUSIONAUTH_APP_MEMORY: ${FUSIONAUTH_APP_MEMORY}
+      FUSIONAUTH_APP_RUNTIME_MODE: development
+      FUSIONAUTH_APP_URL: http://fusionauth:9011
+      SEARCH_SERVERS: http://search:9200
+      SEARCH_TYPE: elasticsearch
+      FUSIONAUTH_APP_KICKSTART_FILE: ${FUSIONAUTH_APP_KICKSTART_FILE}
+    networks:
+      - db_net
+      - search_net
+      - lara_net
+    restart: unless-stopped
+    ports:
+      - 9011:9011
+    volumes:
+      - fusionauth_config:/usr/local/fusionauth/config
+      - ./kickstart:/usr/local/fusionauth/kickstart
+
+## LARAVEL ####################
+  lara_db:
+    image: docker.io/bitnami/mariadb:11.0
+    container_name: lara_db
+    networks:
+      - lara_net
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_myapp
+      - MARIADB_DATABASE=bitnami_myapp
+  lara_app:
+    image: docker.io/bitnami/laravel:10
+    container_name: lara_app
+    networks:
+      - lara_net
+    ports:
+      - 3000:8000
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=bn_myapp
+      - DB_DATABASE=bitnami_myapp
+    volumes:
+      - ./mysite:/app
+    depends_on:
+      - lara_db
+      - fusionauth

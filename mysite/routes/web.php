@@ -7,16 +7,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    error_log('home 1');
     return view('index');
 });
 
 // Route::get('/auth/redirect', function () {
 Route::get('/login', function () {
-        #return Socialite::driver('fusionauth')->redirect();
-    $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
-    $url = str_replace('http://host.docker.internal', 'http://localhost', $url);
-    return redirect($url);
+    return Socialite::driver('fusionauth')->redirect();
+    // $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
+    // $url = str_replace('http://host.docker.internal', 'http://localhost', $url);
+    // return redirect($url);
 })->name('login');
 
 Route::get('/auth/callback', function () {
@@ -45,7 +44,6 @@ Route::get('/auth/callback', function () {
     $localUser->fusionauth_access_token = $user->token;
     $localUser->fusionauth_refresh_token = $user->refreshToken;
 
-    // Logging the user in
     Auth::login($user);
     return redirect('/account');
 });
