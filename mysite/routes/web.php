@@ -10,11 +10,15 @@ Route::get('/', function () {
     return view('index');
 });
 
+// Route::get('/logout', function () {
+//     return view('index');
+// });
+
 // Route::get('/auth/redirect', function () {
 Route::get('/login', function () {
     return Socialite::driver('fusionauth')->redirect();
     // $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
-    // $url = str_replace('http://host.docker.internal', 'http://localhost', $url);
+    // $url = str_replace('fusionauth', 'localhost', $url);
     // return redirect($url);
 })->name('login');
 
@@ -54,20 +58,24 @@ Route::get('/auth/callback', function () {
     error_log( 'callback 3');
     Auth::login($localUser);
     error_log( 'callback 4');
+
+    if (Auth::check()) {
+        error_log('User is authenticated: ' . Auth::user()->email);
+    } else {
+        error_log('User is not authenticated');
+    }
+
     return redirect('/account');
 });
 
-// Route::get('/login', function () {
-//     return view('index');
-// });
-
-// Route::get('/logout', function () {
-//     return view('index');
-// });
-
 Route::get('/account', function () {
+    if (Auth::check()) {
+        error_log('User is authenticated: ' . Auth::user()->email);
+    } else {
+        error_log('User is not authenticated');
+    }
     return view('account', ['email' => Auth::user()->email]);
-});
+}); //->middleware('auth')
 
 Route::get('/change', function () {
     $state = [
@@ -78,7 +86,7 @@ Route::get('/change', function () {
         'pennies' => '',
     ];
     return view('change', ['state' => $state, 'email' => 'temp@example.com']);
-});
+}); //->middleware('auth')
 
 Route::post('/change', function (Request $request) {
     $amount = $request->input('amount');
@@ -102,4 +110,4 @@ Route::post('/change', function (Request $request) {
     $state['error'] = !preg_match('/^(\d+(\.\d*)?|\.\d+)$/', $amount);
 
     return view('change', ['state' => $state, 'email' => 'temp@example.com']);
-});
+}); //->middleware('auth')

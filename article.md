@@ -62,3 +62,7 @@ alter EventServiceProvider.php. $listen function.
 config/services.php
 
 app/Models/User.php
+
+http://fusionauth:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
+
+http://localhost:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
