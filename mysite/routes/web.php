@@ -44,7 +44,16 @@ Route::get('/auth/callback', function () {
     $localUser->fusionauth_access_token = $user->token;
     $localUser->fusionauth_refresh_token = $user->refreshToken;
 
-    Auth::login($user);
+    // ob_start(); // Start output buffering
+    // var_dump($localUser); // Output the variable
+    // $output = ob_get_clean(); // Capture the output and clean the buffer
+    // error_log($output, 0);
+
+   # error_log(print_r($localUser, true));
+
+    error_log( 'callback 3');
+    Auth::login($localUser);
+    error_log( 'callback 4');
     return redirect('/account');
 });
 

@@ -10,8 +10,12 @@ cd ~/code/fusionauth-quickstart-php-laravel-web;
 docker stop $(docker ps -a -q);
 docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q);
 
+docker compose up;
+
 docker compose -f dockerComposeFusionAuth.yml up;
 docker compose -f dockerComposeLaravel.yml up;
+
+docker exec -it lara_app bash;
 ```
 
 ```bash
