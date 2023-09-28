@@ -30,9 +30,11 @@ Can browse to site on http://localhost:3000/
 
 Can now execute commands with
 ```bash
-docker compose -f dockerComposeLaravel.yml exec app      echo hi
-docker compose -f dockerComposeLaravel.yml exec app      php --version
-docker compose -f dockerComposeLaravel.yml exec app      php artisan --version
+docker compose -f dockerComposeLaravel.yml exec lara_app      echo hi
+docker compose -f dockerComposeLaravel.yml exec lara_app      php --version
+docker compose -f dockerComposeLaravel.yml exec lara_app      php artisan --version
+
+docker compose -f dockerComposeLaravel.yml exec lara_app        php artisan make:migration add_fusionauth_fields_user_table
 ```
 
 Laravel docs explain many ways to create new application - https://laravel.com/docs/10.x
@@ -63,6 +65,18 @@ config/services.php
 
 app/Models/User.php
 
+don't do below
+```bash
+docker compose exec lara_app        php artisan make:migration add_fusionauth_fields_user_table
+```
+rather create database/migrations/2023_09_27_142009_add_fusionauth_fields_user_table.php
+
+change .env file inside laravel
+`DB_HOST=lara_db`
+`docker compose exec lara_app         php artisan migrate --host=lara_db`
+
+
 http://fusionauth:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
 
 http://localhost:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
+
