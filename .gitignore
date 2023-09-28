@@ -1,7 +1,5 @@
-node_modules
-complete-application/node_modules
+complete-application/vendor
 .cache
 sessions
 .DS_Store
 .Trash-1000
-#mysite

@@ -74,8 +74,9 @@ rather create database/migrations/2023_09_27_142009_add_fusionauth_fields_user_t
 change .env file inside laravel
 `DB_HOST=lara_db`
 ```bash
-docker compose exec lara_app         php artisan config:clear
-docker compose exec lara_app         php artisan migrate --host=lara_db
+docker compose exec lara_app         composer install;
+docker compose exec lara_app         php artisan config:clear;
+docker compose exec lara_app         php artisan migrate;
 ```
 
 services.php
