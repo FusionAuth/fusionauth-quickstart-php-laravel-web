@@ -7,14 +7,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    if (auth()->check())
+        return redirect('/account');
     return view('index');
 });
 
-// Route::get('/logout', function () { #rjetodo
-//     return view('index');
-// });
+Route::get('/logout', function () { #rjetodo
+    Auth::logout();
+    return redirect('/');
+});
 
-// Route::get('/auth/redirect', function () {
 Route::get('/login', function () {
     return Socialite::driver('fusionauth')->redirect();
     // $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
@@ -25,8 +27,6 @@ Route::get('/login', function () {
 Route::get('/auth/callback', function () {
     /** @var \SocialiteProviders\Manager\OAuth2\User $user */
     $user = Socialite::driver('fusionauth')->user();
-
-    // Let's create a new entry in our users table (or update if it already exists) with some information from the user
     $user = User::updateOrCreate([
         'fusionauth_id' => $user->id,
     ], [
@@ -35,14 +35,13 @@ Route::get('/auth/callback', function () {
         'fusionauth_access_token' => $user->token,
         'fusionauth_refresh_token' => $user->refreshToken,
     ]);
-
     Auth::login($user);
     return redirect('/account');
 });
 
 Route::get('/account', function () {
     return view('account', ['email' => Auth::user()->email]);
-}); //->middleware('auth')
+})->middleware('auth');
 
 Route::get('/change', function () {
     $state = [
@@ -52,8 +51,8 @@ Route::get('/change', function () {
         'nickels' => '',
         'pennies' => '',
     ];
-    return view('change', ['state' => $state, 'email' => 'temp@example.com']);
-}); //->middleware('auth')
+    return view('change', ['state' => $state, 'email' => Auth::user()->email]);
+})->middleware('auth');
 
 Route::post('/change', function (Request $request) {
     $amount = $request->input('amount');
@@ -76,5 +75,5 @@ Route::post('/change', function (Request $request) {
 
     $state['error'] = !preg_match('/^(\d+(\.\d*)?|\.\d+)$/', $amount);
 
-    return view('change', ['state' => $state, 'email' => 'temp@example.com']);
-}); //->middleware('auth')
+    return view('change', ['state' => $state, 'email' => Auth::user()->email]);
+})->middleware('auth');
