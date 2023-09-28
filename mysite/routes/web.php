@@ -18,10 +18,10 @@ Route::get('/logout', function () { #rjetodo
 });
 
 Route::get('/login', function () {
-    return Socialite::driver('fusionauth')->redirect();
-    // $url = Socialite::driver('fusionauth')->stateless()->redirect()->getTargetUrl();
-    // $url = str_replace('fusionauth', 'localhost', $url);
-    // return redirect($url);
+    // return Socialite::driver('fusionauth')->redirect();
+    $url = Socialite::driver('fusionauth')->redirect()->getTargetUrl();
+    $url = str_replace('fusionauth', 'localhost', $url);
+    return redirect($url);
 })->name('login');
 
 Route::get('/auth/callback', function () {
