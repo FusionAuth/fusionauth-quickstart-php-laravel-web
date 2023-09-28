@@ -17,7 +17,7 @@ services:
     ports:
       - 3000:8000
     environment:
-      - DB_HOST=mariadb
+      - DB_HOST=lara_db
       - DB_PORT=3306
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp

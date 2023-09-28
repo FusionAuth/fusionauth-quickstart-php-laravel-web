@@ -88,7 +88,7 @@ services:
       - "host.docker.internal:host-gateway"
 
 ## LARAVEL ####################
-  lara_db:
+  mariadb:
     image: docker.io/bitnami/mariadb:11.0 # port 3306
     container_name: lara_db
     networks:
@@ -107,7 +107,7 @@ services:
     volumes:
       - ./mysite:/app
     depends_on:
-      - lara_db
+      - mariadb
       - fusionauth
     extra_hosts:
       - "host.docker.internal:host-gateway"
