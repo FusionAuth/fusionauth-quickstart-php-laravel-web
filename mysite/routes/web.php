@@ -12,11 +12,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/logout', function () { #rjetodo
-    Auth::logout();
-    return redirect('/');
-});
-
 Route::get('/login', function () {
     // return Socialite::driver('fusionauth')->redirect();
     $url = Socialite::driver('fusionauth')->redirect()->getTargetUrl();
@@ -37,6 +32,11 @@ Route::get('/auth/callback', function () {
     ]);
     Auth::login($user);
     return redirect('/account');
+});
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
 });
 
 Route::get('/account', function () {
