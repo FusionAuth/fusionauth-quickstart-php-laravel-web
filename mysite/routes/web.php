@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Route::get('/logout', function () {
+// Route::get('/logout', function () { #rjetodo
 //     return view('index');
 // });
 
@@ -23,12 +23,8 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/auth/callback', function () {
-    error_log( 'callback 1');
-
     /** @var \SocialiteProviders\Manager\OAuth2\User $user */
     $user = Socialite::driver('fusionauth')->user();
-
-    error_log( 'callback 2');
 
     // Let's create a new entry in our users table (or update if it already exists) with some information from the user
     $user = User::updateOrCreate([
@@ -40,40 +36,11 @@ Route::get('/auth/callback', function () {
         'fusionauth_refresh_token' => $user->refreshToken,
     ]);
 
-    // $localUser = new User();
-    // $localUser->name = $user->name;
-    // $localUser->email = $user->email;
-    // // $localUser->password = 'plain_text_password'; // You can set the password without hashing
-    // $localUser->fusionauth_id = $user->id;
-    // $localUser->fusionauth_access_token = $user->token;
-    // $localUser->fusionauth_refresh_token = $user->refreshToken;
-
-    // ob_start(); // Start output buffering
-    // var_dump($localUser); // Output the variable
-    // $output = ob_get_clean(); // Capture the output and clean the buffer
-    // error_log($output, 0);
-
-   # error_log(print_r($localUser, true));
-
-    error_log( 'callback 3');
     Auth::login($user);
-    error_log( 'callback 4');
-
-    if (Auth::check()) {
-        error_log('User is authenticated: ' . Auth::user()->email);
-    } else {
-        error_log('User is not authenticated');
-    }
-
     return redirect('/account');
 });
 
 Route::get('/account', function () {
-    if (Auth::check()) {
-        error_log('User is authenticated: ' . Auth::user()->email);
-    } else {
-        error_log('User is not authenticated');
-    }
     return view('account', ['email' => Auth::user()->email]);
 }); //->middleware('auth')
 
