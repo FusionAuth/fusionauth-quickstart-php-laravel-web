@@ -104,11 +104,6 @@ services:
       - lara_net
     ports:
       - 3000:8000
-    environment:
-      - DB_HOST=mariadb
-      - DB_PORT=3306
-      - DB_USERNAME=bn_myapp
-      - DB_DATABASE=bitnami_myapp
     volumes:
       - ./mysite:/app
     depends_on:

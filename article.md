@@ -73,7 +73,12 @@ rather create database/migrations/2023_09_27_142009_add_fusionauth_fields_user_t
 
 change .env file inside laravel
 `DB_HOST=lara_db`
-`docker compose exec lara_app         php artisan migrate --host=lara_db`
+```bash
+docker compose exec lara_app         php artisan config:clear
+docker compose exec lara_app         php artisan migrate --host=lara_db
+```
+
+services.php
 
 
 http://fusionauth:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code

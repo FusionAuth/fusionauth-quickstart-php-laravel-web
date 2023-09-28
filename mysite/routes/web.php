@@ -31,22 +31,22 @@ Route::get('/auth/callback', function () {
     error_log( 'callback 2');
 
     // Let's create a new entry in our users table (or update if it already exists) with some information from the user
-    // $user = User::updateOrCreate([
-    //     'fusionauth_id' => $user->id,
-    // ], [
-    //     'name' => $user->name,
-    //     'email' => $user->email,
-    //     'fusionauth_access_token' => $user->token,
-    //     'fusionauth_refresh_token' => $user->refreshToken,
-    // ]);
+    $user = User::updateOrCreate([
+        'fusionauth_id' => $user->id,
+    ], [
+        'name' => $user->name,
+        'email' => $user->email,
+        'fusionauth_access_token' => $user->token,
+        'fusionauth_refresh_token' => $user->refreshToken,
+    ]);
 
-    $localUser = new User();
-    $localUser->name = $user->name;
-    $localUser->email = $user->email;
-    // $localUser->password = 'plain_text_password'; // You can set the password without hashing
-    $localUser->fusionauth_id = $user->id;
-    $localUser->fusionauth_access_token = $user->token;
-    $localUser->fusionauth_refresh_token = $user->refreshToken;
+    // $localUser = new User();
+    // $localUser->name = $user->name;
+    // $localUser->email = $user->email;
+    // // $localUser->password = 'plain_text_password'; // You can set the password without hashing
+    // $localUser->fusionauth_id = $user->id;
+    // $localUser->fusionauth_access_token = $user->token;
+    // $localUser->fusionauth_refresh_token = $user->refreshToken;
 
     // ob_start(); // Start output buffering
     // var_dump($localUser); // Output the variable
@@ -56,7 +56,7 @@ Route::get('/auth/callback', function () {
    # error_log(print_r($localUser, true));
 
     error_log( 'callback 3');
-    Auth::login($localUser);
+    Auth::login($user);
     error_log( 'callback 4');
 
     if (Auth::check()) {
