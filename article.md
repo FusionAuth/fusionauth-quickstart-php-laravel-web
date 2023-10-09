@@ -34,15 +34,7 @@ docker compose -f dockerComposeLaravel.yml exec lara_app      php artisan --vers
 docker compose -f dockerComposeLaravel.yml exec lara_app        php artisan make:migration add_fusionauth_fields_user_table
 ```
 
-Laravel docs explain many ways to create new application - https://laravel.com/docs/10.x
-
-make
-resources/views/index.blade.php
-and account and change
-public/changebank.css
-public/money.jpg
-
-include @csrf in account form to avoid 419 page expired error
+## auth
 
 https://laravel.com/docs/10.x/socialite
 
@@ -51,11 +43,6 @@ https://laravel.com/docs/10.x/socialite
       - "host.docker.internal:host-gateway"
 ```
 and http://host.docker.internal
-
-https://github.com/SocialiteProviders/FusionAuth
-```bash
-docker compose -f dockerComposeLaravel.yml exec app      composer require socialiteproviders/fusionauth
-```
 
 alter EventServiceProvider.php. $listen function.
 config/services.php
@@ -82,4 +69,14 @@ services.php
 http://fusionauth:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
 
 http://localhost:9011/oauth2/authorize?client_id=E9FDB985-9173-4E01-9D73-AC2D60D1DC8E&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&scope=email+openid+profile&response_type=code
+
+
+## customization
+make
+resources/views/index.blade.php
+and account and change
+public/changebank.css
+public/money.jpg
+
+include @csrf in account form to avoid 419 page expired error
 
