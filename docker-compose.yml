@@ -105,7 +105,7 @@ services:
     ports:
       - 3000:8000
     volumes:
-      - ./mysite:/app
+      - ./your-application:/app
     depends_on:
       - mariadb
       - fusionauth
