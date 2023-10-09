@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //tag::fusionauth[]
     /**
      * The attributes that are mass assignable.
      *
@@ -38,6 +39,7 @@ class User extends Authenticatable
         'fusionauth_access_token',
         'fusionauth_refresh_token',
     ];
+    //end::fusionauth[]
 
     /**
      * The attributes that should be cast.

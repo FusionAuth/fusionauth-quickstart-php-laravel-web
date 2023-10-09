@@ -6,11 +6,13 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
+
 Route::get('/', function () {
     if (auth()->check())
         return redirect('/account');
     return view('index');
 });
+
 
 Route::get('/login', function () {
     // return Socialite::driver('fusionauth')->redirect();
@@ -18,6 +20,7 @@ Route::get('/login', function () {
     $url = str_replace('fusionauth', 'localhost', $url);
     return redirect($url);
 })->name('login');
+
 
 Route::get('/auth/callback', function () {
     /** @var \SocialiteProviders\Manager\OAuth2\User $user */
@@ -34,14 +37,17 @@ Route::get('/auth/callback', function () {
     return redirect('/account');
 });
 
+
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
 
+
 Route::get('/account', function () {
     return view('account', ['email' => Auth::user()->email]);
 })->middleware('auth');
+
 
 Route::get('/change', function () {
     $state = [
@@ -53,6 +59,7 @@ Route::get('/change', function () {
     ];
     return view('change', ['state' => $state, 'email' => Auth::user()->email]);
 })->middleware('auth');
+
 
 Route::post('/change', function (Request $request) {
     $amount = $request->input('amount');
