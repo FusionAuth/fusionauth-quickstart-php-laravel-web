@@ -1,6 +1,3 @@
-todo - put vendor files in source control for complete-application.
-todo - alter .gitignore for mysite
-
 Installing laravel and php with docker - https://hub.docker.com/r/bitnami/laravel
 Using compose file from - https://raw.githubusercontent.com/bitnami/containers/main/bitnami/laravel/docker-compose.yml
 
@@ -39,8 +36,6 @@ docker compose -f dockerComposeLaravel.yml exec lara_app        php artisan make
 
 Laravel docs explain many ways to create new application - https://laravel.com/docs/10.x
 
-https://laravel.com/docs/10.x/socialite
-
 make
 resources/views/index.blade.php
 and account and change
@@ -48,6 +43,8 @@ public/changebank.css
 public/money.jpg
 
 include @csrf in account form to avoid 419 page expired error
+
+https://laravel.com/docs/10.x/socialite
 
 ```docker-compose
     extra_hosts:
