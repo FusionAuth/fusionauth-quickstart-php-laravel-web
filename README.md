@@ -2,32 +2,26 @@
 
 ## Documentation
 
-This repository is documented at https://fusionauth.io/docs/quickstarts/quickstart-javascript-express-web.
+This repository is documented at https://fusionauth.io/docs/quickstarts/quickstart-php-laravel-web.
 
 Further reading:
-- [Express security best practice](https://expressjs.com/en/advanced/best-practice-security.html)
-- [Passport.js authentication concepts](https://www.passportjs.org/concepts/authentication/downloads/html)
-- [Passport.js Oauth2](https://github.com/jaredhanson/passport-oauth2)
+- [Laravel Socialite concepts](https://laravel.com/docs/10.x/socialite)
 - [FusionAuth OAuth Docs](https://fusionauth.io/docs/v1/tech/oauth/endpoints)
 
 ## Prerequisites
 
-Install Docker and Node.js.
+- Docker version 20 or later.
 
 ## How To Run
 
-In a terminal run the following to start FusionAuth.
+In a terminal run the following to start FusionAuth and Laravel.
 
 ```shell
-docker-compose up
-```
-
-In another terminal start the app.
-
-```shell
-cd complete-application
-npm install
-npm run start
+git clone https://github.com/ritza-co/fusionauth-quickstart-php-laravel-web.git
+cd fusionauth-quickstart-php-laravel-web/complete-application
+docker-compose up -d
+docker compose exec lara_app      composer install
+docker compose exec lara_app      php artisan migrate
 ```
 
 Browse to the app at http://localhost:3000.
