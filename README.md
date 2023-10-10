@@ -1,4 +1,4 @@
-# FusionAuth Express Quickstart
+# FusionAuth Laravel Quickstart
 
 ## Documentation
 
