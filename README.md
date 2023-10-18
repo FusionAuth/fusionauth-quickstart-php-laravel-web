@@ -24,4 +24,4 @@ docker compose exec lara_app composer install
 docker compose exec lara_app php artisan migrate
 ```
 
-Browse to the app at http://localhost:3000.
+Browse to the app at http://localhost:5001.
