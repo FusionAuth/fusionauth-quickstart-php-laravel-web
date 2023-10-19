@@ -103,7 +103,7 @@ services:
     networks:
       - lara_net
     ports:
-      - 3000:8000
+      - "5001:8000"
     volumes:
       - ./your-application:/app
     depends_on:

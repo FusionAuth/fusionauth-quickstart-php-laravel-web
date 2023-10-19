@@ -19,9 +19,9 @@ In a terminal run the following to start FusionAuth and Laravel.
 ```shell
 git clone https://github.com/FusionAuth/fusionauth-quickstart-php-laravel-web.git
 cd fusionauth-quickstart-php-laravel-web/complete-application
-docker-compose up -d
+docker compose up -d
 docker compose exec lara_app composer install
 docker compose exec lara_app php artisan migrate
 ```
 
-Browse to the app at http://localhost:3000.
+Browse to the app at http://localhost:5001.
