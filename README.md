@@ -24,6 +24,7 @@ git clone https://github.com/FusionAuth/fusionauth-quickstart-php-laravel-web.gi
 cd fusionauth-quickstart-php-laravel-web
 docker compose up -d
 cd complete-application
+composer install
 touch database/database.sqlite
 php artisan migrate
 php artisan serve
