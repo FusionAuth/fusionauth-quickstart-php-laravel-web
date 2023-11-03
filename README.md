@@ -10,7 +10,10 @@ Further reading:
 
 ## Prerequisites
 
-- Docker version 20 or later.
+* [PHP](https://www.php.net/manual/en/install.php) 8.1
+* [Composer](https://getcomposer.org/)
+* [Nodejs](https://nodejs.org/)
+* [Docker](https://www.docker.com) version 20 or later.
 
 ## How To Run
 
@@ -18,10 +21,12 @@ In a terminal run the following to start FusionAuth and Laravel.
 
 ```shell
 git clone https://github.com/FusionAuth/fusionauth-quickstart-php-laravel-web.git
-cd fusionauth-quickstart-php-laravel-web/complete-application
+cd fusionauth-quickstart-php-laravel-web
 docker compose up -d
-docker compose exec lara_app composer install
-docker compose exec lara_app php artisan migrate
+cd complete-application
+touch database/database.sqlite
+php artisan migrate
+php artisan serve
 ```
 
-Browse to the app at http://localhost:5001.
+Browse to the app at http://localhost:8000.
