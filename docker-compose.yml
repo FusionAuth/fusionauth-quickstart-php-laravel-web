@@ -14,8 +14,6 @@ volumes:
   search_data:
 
 services:
-
-## FUSIONAUTH ####################
   db:
     image: postgres:16.0-bookworm
     environment:
@@ -90,30 +88,5 @@ services:
     volumes:
       - fusionauth_config:/usr/local/fusionauth/config
       - ./kickstart:/usr/local/fusionauth/kickstart
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-## LARAVEL ####################
-  mariadb:
-    image: docker.io/bitnami/mariadb:11.0 # port 3306
-    container_name: lara_db
-    networks:
-      - lara_net
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes # recommended only for development.
-      - MARIADB_USER=bn_myapp
-      - MARIADB_DATABASE=bitnami_myapp
-  lara_app:
-    image: docker.io/bitnami/laravel:10
-    container_name: lara_app
-    networks:
-      - lara_net
-    ports:
-      - "5001:8000"
-    volumes:
-      - ./your-application:/app
-    depends_on:
-      - mariadb
-      - fusionauth
     extra_hosts:
       - "host.docker.internal:host-gateway"
