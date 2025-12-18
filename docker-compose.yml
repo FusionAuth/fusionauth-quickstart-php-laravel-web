@@ -59,7 +59,7 @@ services:
       - search_net
 
   fusionauth:
-    image: fusionauth/fusionauth-app:latest
+    image: fusionauth/fusionauth-app:dev
     depends_on:
       db:
         condition: service_healthy
